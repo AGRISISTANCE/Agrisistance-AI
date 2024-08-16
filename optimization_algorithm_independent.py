@@ -1,14 +1,12 @@
 import numpy as np
 from itertools import accumulate
 
-# Define the parameters
 crops = ['Crop A', 'Crop B', 'Crop C']
 cost_per_m2 = [10, 15, 20]
 revenue_per_m2 = [20, 25, 30]
 total_budget = 1000
 total_area = 500
 
-# Define the genetic algorithm parameters
 population_size = 100
 num_generations = 100
 mutation_rate = 0.1
@@ -87,10 +85,10 @@ def run_genetic_algorithm():
     best_individual = max(population, key=fitness_function)
     return best_individual
 
-# Run the genetic algorithm
+
 best_solution = run_genetic_algorithm()
 
-# Print the results
+
 print("Optimal allocation:")
 for i, crop in enumerate(crops):
     print(f"{crop}: {best_solution[i] - (best_solution[i-1] if i > 0 else 0)} m²")
