@@ -2,7 +2,7 @@ import numpy as np
 import joblib
 import logging
 
-# Set up logging
+# Set up logging for better tracking and debugging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Load the model and scaler
