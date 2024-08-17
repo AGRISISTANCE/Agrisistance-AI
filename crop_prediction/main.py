@@ -42,8 +42,8 @@ def predict_interactive(model, scaler):
             print(f"{i}. {crop}: {probability:.4f}")
 
 # Load the model and scaler
-model_file = 'knn_crop_model.joblib'  # Path to your saved model
-scaler_file = 'knn_crop_scaler.joblib'  # Path to your saved scaler
+model_file = 'knn_crop_model.joblib'  
+scaler_file = 'knn_crop_scaler.joblib'  
 knn_model, scaler = load_model(model_file, scaler_file)
 
 # Run the interactive prediction
