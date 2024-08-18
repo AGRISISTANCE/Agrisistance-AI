@@ -2,6 +2,7 @@ import numpy as np
 import joblib
 import logging
 from itertools import accumulate
+import io
 #version scikit-learn==1.3.2
 
 #inputs
@@ -29,21 +30,22 @@ result = []
 # Set up logging so we can track what's happening
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Load the pre-trained model and the scaler used for the data
-def load_model(model_path, scaler_path):
-    logging.info("Loading the machine learning model and the scaler for preprocessing...")
-    model = joblib.load(model_path)
-    scaler = joblib.load(scaler_path)
-    return model, scaler
+# Load the pre-trained model directly from the file
+def load_model(model_file):
+    logging.info("Loading the machine learning model...")
+    model = joblib.load(model_file)
+    return model
+
+# Load the scaler
+def load_scaler(scaler_file):
+    logging.info("Loading the scaler...")
+    return joblib.load(scaler_file)
 
 # Predict the top 10 crops that match the input data
 def predict_top_10_crops(model, scaler, new_data):
-    logging.info("Making predictions for the top 20 most suitable crops...")
-    # Scale the input data using the loaded scaler
+    logging.info("Making predictions for the top 10 most suitable crops...")
     new_data_scaled = scaler.transform(new_data)
-    # Get the probability for each crop class
     probabilities = model.predict_proba(new_data_scaled)[0]
-    # Sort the crops based on their predicted probabilities and get the top 10
     top_10_crops = [model.classes_[i] for i in np.argsort(probabilities)[::-1][:10]]
     return top_10_crops
 
@@ -51,27 +53,27 @@ def predict_top_10_crops(model, scaler, new_data):
 def predict_interactive(model, scaler):
     logging.info("Using predefined input data to predict top 10 crops...")
     
-    # Combine all input data into a single array
     new_data = np.array([[input_ph, input_temperature, input_rainfall, input_humidity, 
                           input_nitrogen, input_phosphorus, input_potassium, input_o2]])
     
-    # Get predictions for the top 10 crops
     top_10_predictions = predict_top_10_crops(model, scaler, new_data)
     
-    # Print out the top 10 crop predictions
     print("\nTop 10 crop predictions:")
     for i, crop in enumerate(top_10_predictions, 1):
         print(f"{i}. {crop}")
     
     return top_10_predictions
 
-# Load the model and scaler from their respective files
-model_file = 'crop_model.joblib'  
-scaler_file = 'crop_scaler.joblib'  
-knn_model, scaler = load_model(model_file, scaler_file)
+# Load the model from the zipped file and the scaler from the regular file
+
+model_file = 'crop_model_simplified.joblib'
+scaler_file = 'crop_scaler.joblib'
+
+model = load_model(model_file)
+scaler = load_scaler(scaler_file)
 
 # Run the prediction function and store the result in the 'result' variable
-result = predict_interactive(knn_model, scaler)
+result = predict_interactive(model, scaler)
 
 
 
