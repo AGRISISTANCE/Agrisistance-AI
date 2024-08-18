@@ -2,6 +2,7 @@ import numpy as np
 import joblib
 import logging
 from itertools import accumulate
+#version scikit-learn==1.3.2
 
 #inputs
 
