@@ -65,8 +65,8 @@ def predict_interactive(model, scaler):
     return top_10_predictions
 
 # Load the model and scaler from their respective files
-model_file = 'knn_crop_model.joblib'  
-scaler_file = 'knn_crop_scaler.joblib'  
+model_file = 'crop_model.joblib'  
+scaler_file = 'crop_scaler.joblib'  
 knn_model, scaler = load_model(model_file, scaler_file)
 
 # Run the prediction function and store the result in the 'result' variable
