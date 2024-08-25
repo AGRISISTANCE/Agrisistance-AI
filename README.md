@@ -1,26 +1,123 @@
-
 # 🌱 AGRISISTANCE
 
-**A2SV-Agrisistance** is an AI-driven web application aimed at helping African farmers optimize land use and boost crop productivity. Utilizing advanced machine learning algorithms and data analytics, AGRISISTANCE offers actionable insights and personalized recommendations tailored to individual farming needs.
+**A2SV-Agrisistance** is an AI-driven web application designed to assist African farmers in optimizing land use and maximizing crop productivity. By employing advanced machine learning algorithms and data analytics, AGRISISTANCE delivers actionable insights and personalized recommendations tailored to each farming scenario.
+
+## **Features**
+
+### **1. Predicting the Best Crops to Invest In**
+
+This feature uses a machine learning model to identify the most suitable crops based on soil parameters. Key factors include:
+- **Oxygen Levels**
+- **Potassium, Nitrogen, and Phosphorus Levels**
+- **pH Levels**
+- **Humidity Levels**
+
+These parameters can be gathered from IoT devices, manually entered, or web-scraped using OpenAI APIs. The model processes this data to recommend the best crops for investment.
+
+### **2. Optimizing Land Use and Budget**
+
+The optimization feature utilizes genetic algorithms and hill-climbing techniques to determine the ideal crop-to-price-to-area combinations. Inputs include:
+- Crop recommendations from the prediction model
+- Total budget
+- Estimated costs for each crop
+
+The output includes the optimal distribution of crops to maximize profit, considering the total budget and available land area.
+
+### **3. Generating a Tailored Business Plan**
+
+Using generative models and OpenAI, this feature creates a comprehensive business plan, including:
+- **Statistical Analysis and Predictions**
+- **Strategic Advice and Suggestions**
+- **Cost and Resource Management Calculations**
+- **Profit Expectations**
+
+This plan provides farmers with actionable strategies for effective resource management and financial planning.
+
+## **API Endpoints**
+
+### **/predict**
+
+- **Method:** `POST`
+- **Description:** Receives soil parameters and budget information to predict the best crops to plant.
+- **Input:**
+  ```json
+  {
+    "ph": 6.5,
+    "temperature": 25,
+    "rainfall": 200,
+    "humidity": 80,
+    "nitrogen": 40,
+    "phosphorus": 20,
+    "potassium": 15,
+    "o2": 21,
+    "budget": 1000,
+    "area": 500
+  }
+
+- **Output:** List of recommended crops, cost, revenue, and profit projections.
+
+### **/chat**
+- **Method:**  ```POST```
+- **Description:** Provides a conversational interface to answer questions and assist with inquiries, such as recommendations on crops based on various conditions.
+- **Input:**
+```json
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What are the best crops to plant in sandy soil?"
+    }
+  ],
+  "max_token": 150,
+  "temperature": 0.7,
+  "response_format": "text/plain",
+  "user_id": "12345"
+}
+```
+
+- **Headers:**
+```
+- Content-Type: application/json
+- api_token: <your_api_token_here>
+```
+
+- Output: Response containing recommendations or information based on the user's query.
 
 
-THE AI FEATURES IN AGRISISTANCE:
-the web application has 3 main features that are AI generated:
 
-# **1/Predecting the best crops to invest in based off data of the soil:**
+## **Getting Started**
 
+### **Installation**
 
-this feature uses a machine learning trained model that predicts the best fitted crops based off 5 parameters: oxygen levels, potassium / azote / phosphorus levels, ph levels, and humidity levels
-these parameters are fetched using IOT devices, or manually entered or web-scraped using an openAI API
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/Agrisistance-AI.git 
+   ```
 
-the model is trained to fit the parameters accordingly and generate a number of best crops to invest in 
+2. Navigate to the project directory:
+    ```bash
+    cd Agrisistance-AI
+    ```
 
-# **2/OPTIMIZIG LAND USE AND BUDGET:**
+3. Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-this feature uses an optimization mechanism that falls within the search algorithms category, using a combination of genetic algorithms and hill-climbing, it suggests the best price-area-crop combinations in order to maximize the profit obtained, it takes as input the list of suggested crops from the first model and the total budget to be invested as well as estimated costs of each crops, the latter is obtained using web-scraping, it outputs the expected profit off each crop as well as the total expected profit based off the current budget
+### **Running the Application**
+1. Start the FastAPI server:
+    ```bash
+    uvicorn main:app --reload
+    ```
 
-# **3/Generating an accomodated business plan for the farmer:**
+2. Access the application at:
+    ```bash
+    http://127.0.0.1:8000
+    ```
 
-this feature uses a generative model that takes all the already mentioned parameters as input , and using openAI , it generates a well fitted business model containing: statistics and predictions, advice and suggestions, calculations of cost and resource management as well as profit expectations
-
-# The following Schema represents the flow of the models and the expected output and input at each endpoint:**
+## Configuration
+Ensure you have a .env file in the root directory with the necessary environment variables, including API tokens and configuration settings.
+    ```bash
+    API_TOKEN=YOUR_API_TOKEN
+    ```
